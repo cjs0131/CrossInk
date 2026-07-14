@@ -74,6 +74,7 @@ inline esp_sleep_wakeup_cause_t esp_sleep_get_wakeup_cause() { return ESP_SLEEP_
 #include "SdCardFontSystem.h"
 #include "activities/Activity.h"
 #include "activities/ActivityManager.h"
+#include "activities/boot_sleep/SleepActivity.h"
 #include "activities/reader/EpubReaderUtils.h"
 #include "activities/reader/KOReaderSyncActivity.h"
 #include "activities/reader/ReadingStatsUtils.h"
@@ -754,12 +755,31 @@ void setup() {
   const auto wakeupReason = gpio.getWakeupReason();
   LOG_INF("BOOT", "Wake route: %s", wakeupRouteName(wakeupReason));
   switch (wakeupReason) {
-    case HalGPIO::WakeupReason::PowerButton:
+    case HalGPIO::WakeupReason::PowerButton: {
       LOG_INF("BOOT", "Power-button wake: verifying duration required=%u shortAllowed=%d",
               SETTINGS.getPowerButtonWakeDuration(), SETTINGS.shortPwrBtn == CrossPointSettings::SHORT_PWRBTN::SLEEP);
-      gpio.verifyPowerButtonWakeup(SETTINGS.getPowerButtonWakeDuration(),
-                                   SETTINGS.shortPwrBtn == CrossPointSettings::SHORT_PWRBTN::SLEEP);
+      const auto wakeOutcome = gpio.verifyPowerButtonWakeup(
+          SETTINGS.getPowerButtonWakeDuration(), SETTINGS.shortPwrBtn == CrossPointSettings::SHORT_PWRBTN::SLEEP);
+      if (wakeOutcome == HalGPIO::PowerWakeOutcome::ShortTap) {
+        // Short tap during sleep. verifyPowerButtonWakeup() used to go straight
+        // back to sleep here; now we decide. If wallpaper cycling is enabled and
+        // the sleep mode draws from a wallpaper folder, wake just far enough to
+        // paint the next wallpaper and sleep again — never booting into the UI.
+        const bool wantCycle = SETTINGS.cycleWallpaperOnTap != 0 &&
+                               SleepActivity::modeSupportsCycling(SETTINGS.sleepScreen, APP_STATE.lastSleepFromReader);
+        if (wantCycle) {
+          setupDisplayAndFonts(/*seamless=*/true);  // keep the retained sleep frame; skip the boot clear
+          SleepActivity(renderer, mappedInputManager, /*canSnapshotOverlayBackground=*/false).cycleWallpaper();
+          halTiltSensor.deepSleep();
+          display.deepSleep();
+          powerManager.startDeepSleep(gpio);  // does not return
+        }
+        // Not cycling: preserve prior behavior — go back to sleep without booting.
+        powerManager.startDeepSleep(gpio);  // does not return
+      }
+      // FullPress: fall through to the normal boot path below.
       break;
+    }
     case HalGPIO::WakeupReason::AfterUSBPower:
       // TEMP: continue booting while diagnosing post-flash/reset behavior.
       // Normal behavior is to go back to sleep when USB power causes a cold boot.

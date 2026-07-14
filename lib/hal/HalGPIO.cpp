@@ -176,10 +176,10 @@ void HalGPIO::startDeepSleep() {
   esp_deep_sleep_start();
 }
 
-void HalGPIO::verifyPowerButtonWakeup(uint16_t requiredDurationMs, bool shortPressAllowed) {
+HalGPIO::PowerWakeOutcome HalGPIO::verifyPowerButtonWakeup(uint16_t requiredDurationMs, bool shortPressAllowed) {
   if (shortPressAllowed) {
-    // Fast path - no duration check needed
-    return;
+    // Fast path - no duration check needed; any press is a full wake.
+    return PowerWakeOutcome::FullPress;
   }
   // TODO: Intermittent edge case remains: a single tap followed by another single tap
   // can still power on the device. Tighten wake debounce/state handling here.
@@ -201,11 +201,14 @@ void HalGPIO::verifyPowerButtonWakeup(uint16_t requiredDurationMs, bool shortPre
       inputMgr.update();
     } while (inputMgr.isPressed(BTN_POWER) && inputMgr.getPowerButtonHeldTime() < calibratedDuration);
     if (inputMgr.getPowerButtonHeldTime() < calibratedDuration) {
-      startDeepSleep();
+      // Released before the wake threshold: report a short tap. The caller
+      // (setup()) decides whether to sleep again or cycle the wallpaper.
+      return PowerWakeOutcome::ShortTap;
     }
-  } else {
-    startDeepSleep();
+    return PowerWakeOutcome::FullPress;
   }
+  // Button never observed pressed within the settle window: treat as a short tap.
+  return PowerWakeOutcome::ShortTap;
 }
 
 bool HalGPIO::isUsbConnected() const {

@@ -75,10 +75,17 @@ class HalGPIO {
   // Setup wake up GPIO and enter deep sleep
   void startDeepSleep();
 
-  // Verify power button was held long enough after wakeup.
-  // If verification fails, enters deep sleep and does not return.
+  // Outcome of classifying the power-button hold after a wakeup.
+  enum class PowerWakeOutcome {
+    FullPress,  // held long enough (or shortPressAllowed) — proceed with a full wake
+    ShortTap,   // released too early, or no press detected — caller decides what to do
+  };
+
+  // Classify the power-button hold after a wakeup. Unlike before, this no longer
+  // enters deep sleep itself: it returns ShortTap and lets the caller decide
+  // whether to go back to sleep or, e.g., cycle the sleep wallpaper.
   // Should only be called when wakeup reason is PowerButton.
-  void verifyPowerButtonWakeup(uint16_t requiredDurationMs, bool shortPressAllowed);
+  PowerWakeOutcome verifyPowerButtonWakeup(uint16_t requiredDurationMs, bool shortPressAllowed);
 
   // Check if USB is connected
   bool isUsbConnected() const;

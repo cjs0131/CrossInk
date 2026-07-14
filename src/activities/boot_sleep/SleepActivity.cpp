@@ -31,6 +31,7 @@
 #include "fontIds.h"
 #include "images/Logo120.h"
 #include "images/MoonIcon.h"
+#include "util/SleepCycleUtil.h"
 
 namespace {
 
@@ -1006,4 +1007,72 @@ void SleepActivity::renderOverlaySleepScreen() const {
   renderer.displayGrayBuffer(TURN_OFF_SCREEN_AFTER_SLEEP_REFRESH);
   renderer.setRenderMode(GfxRenderer::BW);
   renderer.restoreBwBuffer();
+}
+
+bool SleepActivity::modeSupportsCycling(uint8_t sleepScreenMode, bool lastSleepFromReader) {
+  if (sleepScreenMode == CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM) {
+    return true;
+  }
+  // COVER_CUSTOM falls back to the custom wallpaper folder only when the last
+  // sleep was not from the reader (see onEnter()); otherwise it shows the cover.
+  if (sleepScreenMode == CrossPointSettings::SLEEP_SCREEN_MODE::COVER_CUSTOM && !lastSleepFromReader) {
+    return true;
+  }
+  return false;
+}
+
+size_t SleepActivity::countValidSleepImages() {
+  // A pinned favorite always renders the same image, so it is never cyclable.
+  if (!APP_STATE.favoriteSleepImagePath.empty() && Storage.exists(APP_STATE.favoriteSleepImagePath.c_str()) &&
+      FsHelpers::hasBmpExtension(APP_STATE.favoriteSleepImagePath)) {
+    return 1;
+  }
+
+  // Mirror selectRandomSleepImage()'s Custom-mode enumeration: BMPs only (PNG is
+  // Overlay-only), validated by header parse, from the preferred sleep folder.
+  FsFile dir;
+  std::string sleepDir;
+  if (!openPreferredSleepDirectory(dir, sleepDir)) {
+    return 0;
+  }
+
+  size_t count = 0;
+  char name[500];
+  for (auto file = dir.openNextFile(); file; file = dir.openNextFile()) {
+    if (file.isDirectory()) {
+      file.close();
+      continue;
+    }
+    file.getName(name, sizeof(name));
+    const std::string filename(name);
+    if (filename.empty() || filename[0] == '.' || !FsHelpers::hasBmpExtension(filename)) {
+      file.close();
+      continue;
+    }
+    Bitmap bitmap(file);
+    const bool valid = bitmap.parseHeaders() == BmpReaderError::Ok;
+    file.close();
+    if (valid) {
+      count++;
+    }
+  }
+  dir.close();
+  return count;
+}
+
+bool SleepActivity::cycleWallpaper() const {
+  const bool supports = modeSupportsCycling(SETTINGS.sleepScreen, APP_STATE.lastSleepFromReader);
+  const size_t imageCount = countValidSleepImages();
+  if (!sleepcycle::shouldCycleOnTap(SETTINGS.cycleWallpaperOnTap != 0, supports, imageCount)) {
+    LOG_DBG("SLP", "Wallpaper cycle skipped (enabled=%d supports=%d images=%u)", SETTINGS.cycleWallpaperOnTap != 0,
+            supports, static_cast<unsigned>(imageCount));
+    return false;
+  }
+  // renderCustomSleepScreen() re-selects a random, not-recently-shown wallpaper
+  // (there is no pinned favorite when eligible) and paints it. It does not draw
+  // the "Entering sleep" popup (that lives in onEnter()), so a cycle silently
+  // swaps the image.
+  LOG_DBG("SLP", "Cycling wallpaper (%u images)", static_cast<unsigned>(imageCount));
+  renderCustomSleepScreen();
+  return true;
 }
