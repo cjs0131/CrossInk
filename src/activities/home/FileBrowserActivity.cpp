@@ -606,6 +606,7 @@ void FileBrowserActivity::showFileActionMenu(const std::string& entry, bool igno
                     } else {
                       BookActions::drawToast(renderer, tr(STR_BOOK_STATS_DELETED));
                       delay(1000);
+                      fileCompleted.clear();
                     }
                   }
                   requestUpdate();
