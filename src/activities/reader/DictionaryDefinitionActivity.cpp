@@ -146,7 +146,7 @@ static bool shouldSanitizeDefinitionCodepoint(uint32_t cp) {
   }
 }
 
-// Every Lexend Deca/Bitter reader font header (all sizes and styles) has the
+// Every Lexend Deca/Lato reader font header (all sizes and styles) has the
 // same direct coverage among the codepoints above. Keep that coverage beside
 // the approximation policy instead of probing the font map for every definition.
 // The Greek entries below are the renderer's fixed synthetic fallbacks; U+02BB

@@ -382,7 +382,7 @@ STR_NEARBY_STATS_SYNCING: "Se trimit și se primesc statistici"
 STR_NEARBY_STATS_SYNCED: "Ambele cititoare sunt sincronizate"
 STR_NEARBY_STATS_SIMULATOR_UNAVAILABLE: "Sincronizarea statisticilor apropiate nu este disponibilă în simulator"
 
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_BOTTOM: "De jos"
 STR_CHANGE_FONT: "Schimbați fontul"
 STR_CHANGE_FONT_SIZE: "Schimbați dimensiunea fontului"

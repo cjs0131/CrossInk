@@ -382,7 +382,7 @@ STR_NEARBY_STATS_SYNCING: "İstatistikler gönderilip alınıyor"
 STR_NEARBY_STATS_SYNCED: "İki okuyucu da senkronize edildi"
 STR_NEARBY_STATS_SIMULATOR_UNAVAILABLE: "Yakındaki istatistik senkronu simülatörde kullanılamaz"
 
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_BOTTOM: "Alt"
 STR_CHANGE_FONT: "Yazı Tipini Değiştir"
 STR_CHANGE_FONT_SIZE: "Yazı Tipi Boyutunu Değiştir"

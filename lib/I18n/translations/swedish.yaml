@@ -455,7 +455,7 @@ STR_NEARBY_STATS_SYNCING: "Skickar och tar emot statistik"
 STR_NEARBY_STATS_SYNCED: "Båda läsarna är synkade"
 STR_NEARBY_STATS_SIMULATOR_UNAVAILABLE: "Närliggande statistik-sync är inte tillgänglig i simulatorn"
 
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_CHANGE_FONT: "Ändra teckensnitt"
 STR_CHANGE_FONT_SIZE: "Ändra teckenstorlek"
 STR_CHAPTER_SKIP_OPT: "Kapitel Hoppa över"

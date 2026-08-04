@@ -123,8 +123,8 @@ CrossPointSettings::FONT_SIZE firstAvailableReaderFontSize() {
 
 int getFallbackReaderFontIdForFamily(const CrossPointSettings::FONT_FAMILY family) {
   switch (family) {
-    case CrossPointSettings::BITTER:
-      return BITTER_10_FONT_ID;
+    case CrossPointSettings::LATO:
+      return LATO_12_FONT_ID;
     case CrossPointSettings::LEXENDDECA:
     default:
       return LEXENDDECA_10_FONT_ID;
@@ -322,7 +322,7 @@ uint8_t CrossPointSettings::legacyLineSpacingToPercent(const uint8_t legacyValue
   }
 
   switch (fontFamily) {
-    case BITTER:
+    case LATO:
       switch (legacyValue) {
         case TIGHT:
           return 95;
@@ -980,19 +980,22 @@ int CrossPointSettings::getBuiltInReaderFontId() const {
           return LEXENDDECA_16_FONT_ID;
       }
       return getFallbackReaderFontIdForFamily(LEXENDDECA);
-    case BITTER:
+    case LATO:
+      // Lato only ships built-in at 12 and 14 pt (10 and 16 were dropped to fit
+      // the OTA size limit). Map the Tiny/Large buckets to the nearest available
+      // Lato so the family stays consistent and never returns an unregistered id.
       switch (effectiveSize) {
         case TINY:
-          return BITTER_10_FONT_ID;
+          return LATO_12_FONT_ID;
         case SMALL:
-          return BITTER_12_FONT_ID;
+          return LATO_12_FONT_ID;
         case MEDIUM:
         default:
-          return BITTER_14_FONT_ID;
+          return LATO_14_FONT_ID;
         case LARGE:
-          return BITTER_16_FONT_ID;
+          return LATO_14_FONT_ID;
       }
-      return getFallbackReaderFontIdForFamily(BITTER);
+      return getFallbackReaderFontIdForFamily(LATO);
   }
   return getFallbackReaderFontIdForFamily(static_cast<FONT_FAMILY>(fontFamily));
 }

@@ -384,7 +384,7 @@ STR_NEARBY_STATS_SYNCING: "Envoi et réception des stats"
 STR_NEARBY_STATS_SYNCED: "Les deux liseuses sont synchronisées"
 STR_NEARBY_STATS_SIMULATOR_UNAVAILABLE: "La synchro stats proche n’est pas disponible dans le simulateur"
 
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_BOTTOM: "En bas"
 STR_CHANGE_FONT: "Changer la police"
 STR_CHANGE_FONT_SIZE: "Changer la taille de la police"

@@ -382,7 +382,7 @@ STR_NEARBY_STATS_SYNCING: "Statistieken verzenden en ontvangen"
 STR_NEARBY_STATS_SYNCED: "Beide readers zijn gesynchroniseerd"
 STR_NEARBY_STATS_SIMULATOR_UNAVAILABLE: "Dichtbij stats syncen is niet beschikbaar in de simulator"
 
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_BOTTOM: "Onderkant"
 STR_CHANGE_FONT: "Wijzig lettertype"
 STR_CHANGE_FONT_SIZE: "Wijzig de lettergrootte"

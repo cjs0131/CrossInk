@@ -446,7 +446,7 @@ STR_NEARBY_STATS_SYNCING: "Надсилання й отримання стати
 STR_NEARBY_STATS_SYNCED: "Обидві читалки синхронізовано"
 STR_NEARBY_STATS_SIMULATOR_UNAVAILABLE: "Синхронізація статистики поруч недоступна в симуляторі"
 
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_CHANGE_FONT: "Змінити шрифт"
 STR_CHANGE_FONT_SIZE: "Змінити розмір шрифту"
 STR_CHAPTER_SKIP_OPT: "Пропустити розділ"

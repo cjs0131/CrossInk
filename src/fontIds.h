@@ -82,48 +82,28 @@
 #define CHAREINK_20_FONT_ID (-390579825)
 #endif
 #ifdef OMIT_EMOJI_FONTS
-#define BITTER_8_FONT_ID (1494210917)
+#define LATO_10_FONT_ID (-1487243402)
 #else
-#define BITTER_8_FONT_ID (1806590679)
+#define LATO_10_FONT_ID (1956817565)
 #endif
 #ifdef OMIT_EMOJI_FONTS
-#define BITTER_9_FONT_ID (-1567154940)
+#define LATO_12_FONT_ID (870115970)
 #else
-#define BITTER_9_FONT_ID (1731841716)
+#define LATO_12_FONT_ID (-1624546516)
 #endif
 #ifdef OMIT_EMOJI_FONTS
-#define BITTER_10_FONT_ID (-1829239971)
+#define LATO_14_FONT_ID (1922207624)
 #else
-#define BITTER_10_FONT_ID (-1242223189)
+#define LATO_14_FONT_ID (-285539911)
 #endif
 #ifdef OMIT_EMOJI_FONTS
-#define BITTER_12_FONT_ID (1963441729)
+#define LATO_16_FONT_ID (469998900)
 #else
-#define BITTER_12_FONT_ID (611815583)
+#define LATO_16_FONT_ID (-1248975330)
 #endif
-#ifdef OMIT_EMOJI_FONTS
-#define BITTER_14_FONT_ID (-1705318616)
-#else
-#define BITTER_14_FONT_ID (167846617)
-#endif
-#ifdef OMIT_EMOJI_FONTS
-#define BITTER_16_FONT_ID (1467653849)
-#else
-#define BITTER_16_FONT_ID (-1284751464)
-#endif
-#ifdef OMIT_EMOJI_FONTS
-#define BITTER_18_FONT_ID (-582927980)
-#else
-#define BITTER_18_FONT_ID (-1308817601)
-#endif
-#ifdef OMIT_EMOJI_FONTS
-#define BITTER_20_FONT_ID (-2104090569)
-#else
-#define BITTER_20_FONT_ID (1392022129)
-#endif
-#define UI_10_FONT_ID (-227549249)
-#define UI_12_FONT_ID (652043988)
-#define SMALL_FONT_ID (-1760306835)
+#define UI_10_FONT_ID (971628580)
+#define UI_12_FONT_ID (1618379298)
+#define SMALL_FONT_ID (1851589260)
 
 // Font ID 0 is reserved as the "not found" sentinel.
 // Guard against any hash accidentally producing 0.
@@ -143,14 +123,10 @@ static_assert(CHAREINK_14_FONT_ID != 0, "Font ID collision with sentinel");
 static_assert(CHAREINK_16_FONT_ID != 0, "Font ID collision with sentinel");
 static_assert(CHAREINK_18_FONT_ID != 0, "Font ID collision with sentinel");
 static_assert(CHAREINK_20_FONT_ID != 0, "Font ID collision with sentinel");
-static_assert(BITTER_8_FONT_ID != 0, "Font ID collision with sentinel");
-static_assert(BITTER_9_FONT_ID != 0, "Font ID collision with sentinel");
-static_assert(BITTER_10_FONT_ID != 0, "Font ID collision with sentinel");
-static_assert(BITTER_12_FONT_ID != 0, "Font ID collision with sentinel");
-static_assert(BITTER_14_FONT_ID != 0, "Font ID collision with sentinel");
-static_assert(BITTER_16_FONT_ID != 0, "Font ID collision with sentinel");
-static_assert(BITTER_18_FONT_ID != 0, "Font ID collision with sentinel");
-static_assert(BITTER_20_FONT_ID != 0, "Font ID collision with sentinel");
+static_assert(LATO_10_FONT_ID != 0, "Font ID collision with sentinel");
+static_assert(LATO_12_FONT_ID != 0, "Font ID collision with sentinel");
+static_assert(LATO_14_FONT_ID != 0, "Font ID collision with sentinel");
+static_assert(LATO_16_FONT_ID != 0, "Font ID collision with sentinel");
 static_assert(UI_10_FONT_ID != 0, "Font ID collision with sentinel");
 static_assert(UI_12_FONT_ID != 0, "Font ID collision with sentinel");
 static_assert(SMALL_FONT_ID != 0, "Font ID collision with sentinel");

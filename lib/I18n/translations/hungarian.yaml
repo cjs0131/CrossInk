@@ -382,7 +382,7 @@ STR_NEARBY_STATS_SYNCING: "Statisztikák küldése és fogadása"
 STR_NEARBY_STATS_SYNCED: "Mindkét olvasó szinkronizálva"
 STR_NEARBY_STATS_SIMULATOR_UNAVAILABLE: "A közeli statisztika szinkron nem érhető el a szimulátorban"
 
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_BOTTOM: "Alul"
 STR_CHANGE_FONT: "Betűtípus módosítása"
 STR_CHANGE_FONT_SIZE: "Betűméret módosítása"

@@ -383,7 +383,7 @@ STR_NEARBY_STATS_SYNCING: "Sender og modtager statistik"
 STR_NEARBY_STATS_SYNCED: "Begge læsere er synkroniseret"
 STR_NEARBY_STATS_SIMULATOR_UNAVAILABLE: "Nærliggende statistik-sync er ikke tilgængelig i simulatoren"
 
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_BOTTOM: "Nederst"
 STR_CHANGE_FONT: "Skift skrifttype"
 STR_CHANGE_FONT_SIZE: "Skift skriftstørrelse"

@@ -1313,7 +1313,7 @@ void CrossPointWebServer::handleGetSettings() const {
         JsonArray options = doc["options"].to<JsonArray>();
         if (s.nameId == StrId::STR_FONT_FAMILY && !fontFamilies.empty()) {
           options.add(I18N.get(StrId::STR_LEXEND_DECA));
-          options.add(I18N.get(StrId::STR_BITTER));
+          options.add(I18N.get(StrId::STR_LATO));
           for (const auto& family : fontFamilies) {
             options.add(family.name);
           }

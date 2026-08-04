@@ -86,22 +86,14 @@ reading_font_id CHAREINK_18_FONT_ID \
 reading_font_id CHAREINK_20_FONT_ID \
   ./charein_20_regular.h ./charein_20_bold.h ./charein_20_bolditalic.h ./charein_20_italic.h
 
-reading_font_id BITTER_8_FONT_ID \
-  ./bitter_8_regular.h ./bitter_8_bold.h ./bitter_8_bolditalic.h ./bitter_8_italic.h
-reading_font_id BITTER_9_FONT_ID \
-  ./bitter_9_regular.h ./bitter_9_bold.h ./bitter_9_bolditalic.h ./bitter_9_italic.h
-reading_font_id BITTER_10_FONT_ID \
-  ./bitter_10_regular.h ./bitter_10_bold.h ./bitter_10_bolditalic.h ./bitter_10_italic.h
-reading_font_id BITTER_12_FONT_ID \
-  ./bitter_12_regular.h ./bitter_12_bold.h ./bitter_12_bolditalic.h ./bitter_12_italic.h
-reading_font_id BITTER_14_FONT_ID \
-  ./bitter_14_regular.h ./bitter_14_bold.h ./bitter_14_bolditalic.h ./bitter_14_italic.h
-reading_font_id BITTER_16_FONT_ID \
-  ./bitter_16_regular.h ./bitter_16_bold.h ./bitter_16_bolditalic.h ./bitter_16_italic.h
-reading_font_id BITTER_18_FONT_ID \
-  ./bitter_18_regular.h ./bitter_18_bold.h ./bitter_18_bolditalic.h ./bitter_18_italic.h
-reading_font_id BITTER_20_FONT_ID \
-  ./bitter_20_regular.h ./bitter_20_bold.h ./bitter_20_bolditalic.h ./bitter_20_italic.h
+reading_font_id LATO_10_FONT_ID \
+  ./lato_10_regular.h ./lato_10_bold.h ./lato_10_bolditalic.h ./lato_10_italic.h
+reading_font_id LATO_12_FONT_ID \
+  ./lato_12_regular.h ./lato_12_bold.h ./lato_12_bolditalic.h ./lato_12_italic.h
+reading_font_id LATO_14_FONT_ID \
+  ./lato_14_regular.h ./lato_14_bold.h ./lato_14_bolditalic.h ./lato_14_italic.h
+reading_font_id LATO_16_FONT_ID \
+  ./lato_16_regular.h ./lato_16_bold.h ./lato_16_bolditalic.h ./lato_16_italic.h
 
 # UI fonts — no emoji variant
 emit_hash_define UI_10_FONT_ID ./inter_10_regular.h ./inter_10_bold.h
@@ -116,8 +108,7 @@ for id in \
   LEXENDDECA_16_FONT_ID LEXENDDECA_18_FONT_ID LEXENDDECA_20_FONT_ID \
   CHAREINK_8_FONT_ID CHAREINK_9_FONT_ID CHAREINK_10_FONT_ID CHAREINK_12_FONT_ID CHAREINK_14_FONT_ID \
   CHAREINK_16_FONT_ID CHAREINK_18_FONT_ID CHAREINK_20_FONT_ID \
-  BITTER_8_FONT_ID BITTER_9_FONT_ID BITTER_10_FONT_ID BITTER_12_FONT_ID BITTER_14_FONT_ID \
-  BITTER_16_FONT_ID BITTER_18_FONT_ID BITTER_20_FONT_ID \
+  LATO_10_FONT_ID LATO_12_FONT_ID LATO_14_FONT_ID LATO_16_FONT_ID \
   UI_10_FONT_ID UI_12_FONT_ID SMALL_FONT_ID; do
   echo "static_assert(${id} != 0, \"Font ID collision with sentinel\");"
 done

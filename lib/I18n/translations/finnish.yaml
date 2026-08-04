@@ -350,7 +350,7 @@ STR_NEARBY_STATS_SIMULATOR_UNAVAILABLE: "Lähisynkronointi ei ole käytettäviss
 STR_TIME_LEFT: "Aikaa jäljellä"
 STR_TIME_LEFT_CALCULATING: "Lasketaan..."
 STR_BATTERY: "Akku"
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_BOOK: "Kirja"
 STR_BOOK_PROGRESS_PERCENTAGE: "Kirjan edistymisprosentti"
 STR_BOTTOM: "Pohja"

@@ -431,7 +431,7 @@ STR_RECOVERY_MODE_HINT: "Poseu firmware.bin a l'arrel de la targeta SD i selecci
 
 STR_ALL_BUTTONS: "Tots els botons"
 STR_BIONIC_READING: "Lectura biònica"
-STR_BITTER: "Bitter"
+STR_LATO: "Lato"
 STR_CHANGE_FONT: "Canvia el tipus de lletra"
 STR_CHANGE_FONT_SIZE: "Canvia la mida de la lletra"
 STR_CHAPTER_SKIP_OPT: "Saltar capítol"
