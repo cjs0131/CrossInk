@@ -58,3 +58,14 @@ Refer to https://freeink.org/llms.txt for guidance.
 
 - POSIX TZ signs are inverted from ISO 8601 in `TimeStore::applyTimezone()`: `"UTC-1"` means UTC+1.
 - `LyraTheme::drawHeader()` does not call `BaseTheme::drawHeader()`, so header changes in the base theme must be duplicated in Lyra if needed.
+
+## Webserver / HTTP file API
+
+- `/upload` intentionally does NOT overwrite: an upload to an existing path returns
+  `400 "File already exists"` (`handleUpload` checks `Storage.exists()`). HTTP clients
+  that update a file in place must delete it first, then upload. Same for `/mkdir`,
+  which 400s "Folder already exists".
+- `/move` and `/rename` exist in source, but a deployed build can lag: an X4 on
+  `1.5.0.1-dev+main` served `/mkdir`, `/delete`, `/upload` but 404'd `/move`. Don't
+  assume a route is on-device from the source alone — probe the running device (a
+  registered route 400/500s on bad args; an absent one 404s).
