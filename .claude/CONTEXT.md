@@ -39,6 +39,20 @@ Refer to https://freeink.org/llms.txt for guidance.
   Do not read mid-range heap numbers as session degradation without checking the scenario.
 - SD-font section builds cost ~38-50KB at cold start; the 4-style advance-table prewarm
   (~30KB incl. 16KB contiguous scratch) dominates and is skipped below 80KB free.
+- Switching a book from an SD-card font to a built-in (flash-resident) font roughly doubled
+  maxAlloc on the X4 (~34KB -> ~72KB) and cured "chapter requires too much memory" on a book
+  with an oversized chapter. Built-in fonts are the memory-safe choice for big chapters.
+
+## Fonts
+
+- `lib/EpdFont/scripts/build-font-ids.sh` (regenerates `src/fontIds.h`) is ruby-based and ruby
+  is NOT installed here; a font-id regen needs ruby (or a python shim reproducing the FNV hash).
+  `fontIds.h` values are `#ifdef OMIT_EMOJI_FONTS`-guarded (with-emoji vs no-emoji variant).
+- Built-in reading fonts are font STACKS built by `convert-builtin-fonts.sh` (primary + Cyrillic
+  + NotoEmoji + NotoSymbols + a curated NotoSansCJKsc "PHM" Han set + music notes 0x2669-0x266F);
+  generation needs freetype-py + fontTools. A bare Latin-only build would tofu Project Hail Mary's
+  Chinese. Flash is tight (OTA limit 6,553,600 bytes, ~92-95% full): a full 4-size stacked family
+  is ~1MB, so adding one usually means removing another and/or shipping fewer point sizes.
 
 ## Misc Repo Gotchas
 
