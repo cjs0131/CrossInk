@@ -1,3 +1,9 @@
+## [Unreleased]
+
+### Added
+
+- Finished books show a circle-check icon in the library browser.
+
 ## [v1.5.0] - 2026-07-29
 
 ### Added

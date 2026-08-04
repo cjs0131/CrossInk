@@ -9,6 +9,7 @@ file-text = file-text
 image = image
 book = book
 book-marked = book-marked
+circle-check = circle-check
 file = file
 wifi = wifi
 library = library

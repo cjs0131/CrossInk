@@ -6,6 +6,7 @@
 
 #include <array>
 #include <atomic>
+#include <cstdint>
 #include <functional>
 #include <memory>
 #include <string>
@@ -60,6 +61,8 @@ class FileBrowserActivity final : public Activity {
   static constexpr size_t INDEX_ROW_CACHE_SIZE = 32;
   std::string basepath = "/";
   std::vector<std::string> files;
+  // 0=unknown, 1=not completed, 2=completed; parallel to `files`; non-index only.
+  std::vector<uint8_t> fileCompleted;
   std::unique_ptr<char[]> fileNameBuffer;
   std::unique_ptr<FileIndex> fileIndex;
   std::unique_ptr<FileIndex::Entry> indexEntry;
@@ -90,6 +93,7 @@ class FileBrowserActivity final : public Activity {
   const char* entryNameAt(size_t row);
   void toggleHiddenFiles();
   size_t findEntry(const std::string& name);
+  bool isBookCompletedCached(size_t entryIndex, const std::string& fullPath);
 
  public:
   explicit FileBrowserActivity(GfxRenderer& renderer, MappedInputManager& mappedInput, std::string initialPath = "/",

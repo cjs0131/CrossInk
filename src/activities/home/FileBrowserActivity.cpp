@@ -252,6 +252,7 @@ bool FileBrowserActivity::loadFilesIntoVector(size_t cap, bool& overflow) {
 
 void FileBrowserActivity::loadFiles() {
   usingIndex = false;
+  fileCompleted.clear();
   clearIndexNameCache();
   fileListMemoryLimited = false;
   if (fileIndex) fileIndex->close();
@@ -383,6 +384,7 @@ void FileBrowserActivity::onEnter() {
 void FileBrowserActivity::onExit() {
   Activity::onExit();
   files.clear();
+  fileCompleted.clear();
   fileNameBuffer.reset();
   fileIndex.reset();
   indexEntry.reset();
@@ -638,6 +640,9 @@ void FileBrowserActivity::showFileActionMenu(const std::string& entry, bool igno
                     if (!BookActions::deleteBookStats(fullPath)) {
                       LOG_ERR("FileBrowser", "Failed to delete book stats for: %s", fullPath.c_str());
                     } else {
+                      // Deleting stats clears the completed flag on disk without a loadFiles()
+                      // reload, so drop the cached row so the checkmark icon refreshes.
+                      fileCompleted.clear();
                       BookActions::drawToast(renderer, tr(STR_BOOK_STATS_DELETED));
                       delay(1000);
                     }
@@ -1079,7 +1084,13 @@ void FileBrowserActivity::buildListScreen(UiApp::ScreenType& screen) {
     fui::ListItem item;
     item.label = names[i].c_str();
     if (!values[i].empty()) item.value = values[i].c_str();
-    item.icon = listIconFor(UITheme::getFileIcon(entry), twoLineRows ? 32 : 24);
+    const int iconSize = twoLineRows ? 32 : 24;
+    const UIIcon fileIcon = UITheme::getFileIcon(entry);
+    if (fileIcon == UIIcon::Book && !usingIndex && isBookCompletedCached(entryIndex, fullPath)) {
+      item.icon = fui::bitmapFromIcon(iconSize >= 32 ? icon_circle_check_32 : icon_circle_check_24);
+    } else {
+      item.icon = listIconFor(fileIcon, iconSize);
+    }
     item.actionValue = static_cast<int16_t>(entryIndex);
     items.push_back(item);
   }
@@ -1171,4 +1182,19 @@ size_t FileBrowserActivity::findEntry(const std::string& name) {
   for (size_t i = 0; i < files.size(); i++)
     if (files[i] == name) return i;
   return 0;
+}
+
+bool FileBrowserActivity::isBookCompletedCached(size_t entryIndex, const std::string& fullPath) {
+  // Called only in vector mode (the call site already guards `!usingIndex`); index-mode
+  // folders keep the plain book icon rather than paying for a completion lookup per row.
+  if (fileCompleted.size() != files.size()) {
+    fileCompleted.assign(files.size(), 0);
+  }
+  if (entryIndex >= fileCompleted.size()) {
+    return false;
+  }
+  if (fileCompleted[entryIndex] == 0) {
+    fileCompleted[entryIndex] = BookActions::isBookCompleted(fullPath) ? 2 : 1;
+  }
+  return fileCompleted[entryIndex] == 2;
 }
