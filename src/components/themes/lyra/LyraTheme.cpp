@@ -19,6 +19,8 @@
 #include "components/icons/book.h"
 #include "components/icons/book24.h"
 #include "components/icons/chart.h"
+#include "components/icons/check.h"
+#include "components/icons/check24.h"
 #include "components/icons/cover.h"
 #include "components/icons/file24.h"
 #include "components/icons/folder.h"
@@ -80,6 +82,8 @@ const uint8_t* LyraTheme::iconForName(UIIcon icon, uint32_t size) {
         return Image24Icon;
       case UIIcon::Book:
         return Book24Icon;
+      case UIIcon::BookCompleted:
+        return Check24Icon;
       case UIIcon::File:
         return File24Icon;
       default:
@@ -91,6 +95,8 @@ const uint8_t* LyraTheme::iconForName(UIIcon icon, uint32_t size) {
         return FolderIcon;
       case UIIcon::Book:
         return BookIcon;
+      case UIIcon::BookCompleted:
+        return CheckIcon;
       case UIIcon::Chart:
         return ChartIcon;
       case UIIcon::Recent:
