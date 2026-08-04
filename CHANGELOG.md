@@ -1,4 +1,6 @@
-## [Unreleased]
+## [1.5.0.1] - 2026-08-03
+
+Fork build synced to upstream CrossInk v1.5.0-rc-2.
 
 ### Added
 
