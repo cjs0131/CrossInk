@@ -52,6 +52,10 @@ class FileBrowserActivity final : public Activity {
   static constexpr size_t INDEX_ROW_CACHE_SIZE = 32;
   std::string basepath = "/";
   std::vector<std::string> files;
+  // Lazy per-entry finished-status cache, parallel to `files`.
+  // 0 = unknown (not yet read), 1 = not completed, 2 = completed.
+  // Cleared on every loadFiles(); index mode (usingIndex) does not use it.
+  std::vector<uint8_t> fileCompleted;
   std::unique_ptr<char[]> fileNameBuffer;
   std::unique_ptr<FileIndex> fileIndex;
   std::unique_ptr<FileIndex::Entry> indexEntry;

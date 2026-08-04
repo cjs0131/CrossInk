@@ -227,6 +227,7 @@ bool FileBrowserActivity::loadFilesIntoVector(size_t cap, bool& overflow) {
 void FileBrowserActivity::loadFiles() {
   usingIndex = false;
   clearIndexNameCache();
+  fileCompleted.clear();
   fileListMemoryLimited = false;
   if (fileIndex) fileIndex->close();
 
@@ -349,6 +350,7 @@ void FileBrowserActivity::onEnter() {
 void FileBrowserActivity::onExit() {
   Activity::onExit();
   files.clear();
+  fileCompleted.clear();
   fileNameBuffer.reset();
   fileIndex.reset();
   indexEntry.reset();
@@ -928,7 +930,25 @@ void FileBrowserActivity::render(RenderLock&&) {
     };
     const auto rowIcon = [this](int index) {
       const std::string entry = entryNameAt(index);
-      return UITheme::getFileIcon(entry);
+      UIIcon icon = UITheme::getFileIcon(entry);
+      // Finished books show a checkmark instead of the book icon. Read status
+      // lazily (once per book) into fileCompleted to avoid an SD read per row
+      // on every redraw. Index mode has no in-memory files vector, so it is
+      // skipped and keeps the plain book icon.
+      if (icon == UIIcon::Book && !usingIndex && index >= 0 && static_cast<size_t>(index) < files.size()) {
+        if (fileCompleted.size() != files.size()) {
+          fileCompleted.assign(files.size(), 0);
+        }
+        uint8_t& slot = fileCompleted[static_cast<size_t>(index)];
+        if (slot == 0) {
+          const std::string fullPath = buildFullPath(basepath, entry);
+          slot = BookActions::isBookCompleted(fullPath) ? 2 : 1;
+        }
+        if (slot == 2) {
+          icon = UIIcon::BookCompleted;
+        }
+      }
+      return icon;
     };
     const auto rowValue = [this](int index) {
       const std::string entry = entryNameAt(index);

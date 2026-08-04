@@ -3,6 +3,7 @@
 ### Added
 
 - Cycle Wallpaper on Tap: with a Custom sleep screen, a short press of the power button while asleep shows the next wallpaper and goes back to sleep instead of waking the device. Holding the power button still wakes normally. Off by default; found under Settings → Display.
+- Finished books now show a checkmark instead of the book icon in the library browser.
 
 ## [v1.4.0.1] - 2026-07-28
 
