@@ -6,6 +6,10 @@ Fork build synced to upstream CrossInk v1.5.0-rc-2.
 
 - Finished books show a circle-check icon in the library browser.
 
+### Changed
+
+- Replaced the built-in Bitter font with Lato (sizes 12 and 14, with the full glyph stack: Latin, Cyrillic, emoji, music notes, and the Project Hail Mary CJK characters). Reading in built-in Lato avoids the RAM cost of an SD-card font, roughly doubling the largest allocatable block during page layout so large chapters no longer hit the "chapter requires too much memory" wall.
+
 ### Fixed
 
 - File Transfer screen no longer shows the previous screen ghosted underneath it; the network screens now do a clean refresh on entry instead of a fast refresh over the panel's retained image.
