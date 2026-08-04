@@ -38,6 +38,9 @@ class CrossPointWebServerActivity final : public Activity {
   // Network mode
   NetworkMode networkMode = NetworkMode::JOIN_NETWORK;
   bool isApMode = false;
+  // Force one clean refresh on the first paint so the panel's retained prior image
+  // (e.g. the network menu) is wiped instead of ghosting under the server screen.
+  bool firstRender = true;
 
   // Web server - owned by this activity
   std::unique_ptr<CrossPointWebServer> webServer;

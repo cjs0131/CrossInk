@@ -6,6 +6,10 @@ Fork build synced to upstream CrossInk v1.5.0-rc-2.
 
 - Finished books show a circle-check icon in the library browser.
 
+### Fixed
+
+- File Transfer screen no longer shows the previous screen ghosted underneath it; the network screens now do a clean refresh on entry instead of a fast refresh over the panel's retained image.
+
 ## [v1.5.0] - 2026-07-29
 
 ### Added

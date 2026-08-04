@@ -65,6 +65,7 @@ void NetworkModeSelectionActivity::onEnter() {
   uiReady = false;
   visibleRows = 1;
   topIndex = 0;
+  firstRender = true;
   app.setTheme(uiThemeTokens(uiTarget));
   app.on(ACTION_ROW, &NetworkModeSelectionActivity::onRowEvent, this);
   app.setScreen(&NetworkModeSelectionActivity::listScreen, this);
@@ -197,7 +198,10 @@ void NetworkModeSelectionActivity::render(RenderLock&&) {
   const auto labels = mappedInput.mapLabels(tr(STR_BACK), tr(STR_SELECT), tr(STR_DIR_UP), tr(STR_DIR_DOWN));
   GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
 
-  renderer.displayBuffer();
+  // Clean waveform on entry clears any image the panel retained across the reboot;
+  // fast refresh afterwards keeps menu navigation snappy.
+  renderer.displayBuffer(firstRender ? HalDisplay::HALF_REFRESH : HalDisplay::FAST_REFRESH);
+  firstRender = false;
 }
 
 void NetworkModeSelectionActivity::onModeSelected(NetworkMode mode) {

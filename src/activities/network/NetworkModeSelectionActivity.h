@@ -38,6 +38,10 @@ class NetworkModeSelectionActivity final : public Activity {
   std::atomic<bool> uiReady{false};
   int visibleRows = 1;  // rows per page at the current scale; set by the screen builder
   int topIndex = 0;     // viewport scroll position, decoupled from the selection
+  // The panel physically retains the previous screen across the silent reboot into
+  // network mode, and FAST_REFRESH does not clear it. Force one clean refresh on the
+  // first render after entry so the old image (e.g. a prior web-server screen) is wiped.
+  bool firstRender = true;
 
   static void listScreen(UiApp::ScreenType& screen, void* user);
   static void onRowEvent(const freeink::ui::ActionEvent& event, void* user);
