@@ -36,3 +36,7 @@ lib/EpdFont/scripts/output/
 /site/public/CNAME
 
 dist-publish/
+# ESP-IDF build artifacts
+managed_components/
+.dummy/
+sdkconfig.defaults
